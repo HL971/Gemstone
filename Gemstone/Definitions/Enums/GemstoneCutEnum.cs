@@ -2,6 +2,7 @@
 {
     public enum GemstoneCutEnum
     {
+        Uncut,
         RoundBrilliant,
         OvalBrilliant,
         PearBrilliant,

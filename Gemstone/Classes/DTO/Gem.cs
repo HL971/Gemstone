@@ -80,6 +80,7 @@ namespace Gemstone.Classes.DTO
                 "ID      : " + ID,
                 "Value   : " + Value,
                 string.Empty,
+                "Base    : " + BaseValue,
                 "Carat   : " + Math.Round(Size, 3),
                 "Color   : " + Math.Round(ColorGrade, 3),
                 "Clarity : " + Math.Round(ClarityGrade, 3),
@@ -110,7 +111,12 @@ namespace Gemstone.Classes.DTO
             ID = Guid.NewGuid();
 
             Type = type ?? ValueGenerator.GetRandomGemstoneType();
-            Cut = cut ?? ValueGenerator.GetRandomGemstoneCut();
+
+            if (GemstoneAdditions.UncutStones.Contains(Type))
+                Cut = GemstoneCutEnum.Uncut;
+            else
+                Cut = cut ?? ValueGenerator.GetRandomGemstoneCut();
+
             Color = color ?? ValueGenerator.GetRandomGemstoneColor(Type);
 
             ClarityGrade = clarityGrade ?? ValueGenerator.GetRandomClarityCutorColorValue();
@@ -148,6 +154,24 @@ namespace Gemstone.Classes.DTO
                 case GemstoneEnum.Sapphire:
                     if (Color != GemColor.Blue)
                         BaseValue *= 1.1;
+                    break;
+                case GemstoneEnum.Topaz:
+                    if (Color == GemColor.Clear)
+                        BaseValue *= 0.8;
+                    if (Color == GemColor.Blue)
+                        BaseValue *= 1.2;
+                    if (Color == GemColor.Red || Color == GemColor.Pink)
+                        BaseValue *= 2;
+                    break;
+                case GemstoneEnum.Garnet:
+                    if (Color == GemColor.Red)
+                        BaseValue *= 1.25;
+                    if (Color == GemColor.Orange || Color == GemColor.Purple)
+                        BaseValue *= 1.1;
+                    break;
+                case GemstoneEnum.Tourmaline:
+                    if (Color == GemColor.Yellow || Color == GemColor.Blue || Color == GemColor.Orange || Color == GemColor.Purple || Color == GemColor.Red)
+                        BaseValue *= 1.25;
                     break;
                 default:
                     break;

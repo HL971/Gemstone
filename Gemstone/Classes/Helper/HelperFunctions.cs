@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gemstone.Classes.Helper
 {
@@ -12,7 +10,7 @@ namespace Gemstone.Classes.Helper
         /// <returns>True if the string is null or is composed of only whitespace</returns>
         internal static bool IsNullOrWhitespace(this string value)
         {
-            return value == null ? true : value == string.Empty ? true : !value.Any(x => !Char.IsWhiteSpace(x));
+            return value == null ? true : value == string.Empty ? true : !value.Any(x => !char.IsWhiteSpace(x));
         }
 
         /// <summary>

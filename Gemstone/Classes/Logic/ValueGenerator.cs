@@ -52,6 +52,14 @@ namespace Gemstone.Classes.Logic
                     return (GemColor)GetRandomWeightedItem(GemstoneColorAdditions.DiamondColors);
                 case GemstoneEnum.Sapphire:
                     return (GemColor)GetRandomWeightedItem(GemstoneColorAdditions.SapphireColors);
+                case GemstoneEnum.Garnet:
+                    return (GemColor)GetRandomWeightedItem(GemstoneColorAdditions.GarnetColors);
+                case GemstoneEnum.Peridot:
+                    return (GemColor)GetRandomWeightedItem(GemstoneColorAdditions.PeridotColors);
+                case GemstoneEnum.Spinel:
+                    return (GemColor)GetRandomWeightedItem(GemstoneColorAdditions.SpinelColors);
+                case GemstoneEnum.Rubellite:
+                    return (GemColor)GetRandomWeightedItem(GemstoneColorAdditions.RubelliteColors);
                 default:
                     return GemColor.UNDEFINED;
             }
