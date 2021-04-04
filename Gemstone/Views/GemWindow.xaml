@@ -18,7 +18,7 @@
         <Label Name="DescriptionText" Content="-" HorizontalAlignment="Left" Margin="10,61,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="306"/>
         <Label Content="Value" HorizontalAlignment="Left" Margin="15,10,0,0" VerticalAlignment="Top"/>
         <TextBox Name="ValueText" IsReadOnly="True" HorizontalAlignment="Left" Height="24" Margin="196,10,0,0" TextWrapping="Wrap" Text="Value" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="90,286,0,0" TextWrapping="Wrap" Text="Filename.txt" VerticalAlignment="Top" Width="226"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="75" Click="Save_Click" IsEnabled="{Binding CanSaveGem}"/>
+        <TextBox Name="Filename" HorizontalAlignment="Left" Height="23" Margin="90,286,0,0" TextWrapping="Wrap" Text="Filename.txt" VerticalAlignment="Top" Width="226"/>
     </Grid>
 </Window>

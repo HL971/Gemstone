@@ -1,4 +1,5 @@
 ﻿using Gemstone.Classes.DTO;
+using Gemstone.Classes.Saving;
 using System;
 using System.Windows;
 
@@ -12,9 +13,13 @@ namespace Gemstone.Views
         public GemWindow()
         {
             InitializeComponent();
+            _documentSaver = new DocumentSaver();
         }
 
+        private readonly DocumentSaver _documentSaver;
         public Gem gem;
+
+        private bool CanSaveGem => gem != null;
 
         public double ClarityGrade => gem != null
             ? gem.ClarityGrade
@@ -53,6 +58,15 @@ namespace Gemstone.Views
         }
 
         public void Save_Click(Object sender, EventArgs e)
-        { } // TODO
+        {
+            try
+            {
+                _documentSaver.SaveSingleGemstone(Filename.Text, gem);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "An Error has occurred");
+            }
+        }
     }
 }

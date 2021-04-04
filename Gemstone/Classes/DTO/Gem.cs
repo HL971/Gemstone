@@ -3,9 +3,6 @@ using Gemstone.Classes.Logic;
 using Gemstone.Definitions.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gemstone.Classes.DTO
 {
@@ -55,6 +52,8 @@ namespace Gemstone.Classes.DTO
 
         private double BaseValue { get; set; }
 
+        private Guid ID { get; set; }
+
         private string SizeString => Size.SizeString();
         private string CutString => Cut.CutString();
         private string GemString => Type.GemString();
@@ -69,6 +68,37 @@ namespace Gemstone.Classes.DTO
                 : SizeString + " " + CutString + " " + GemString;
         }
 
+        /// <summary>
+        /// Returns a string list that can be used in DocumentSaver
+        /// Contains GM Specific information
+        /// </summary>
+        public List<string> GMDocumentStrings()
+        {
+            return new List<string>
+            {
+                ToString(),
+                "ID      : " + ID,
+                "Value   : " + Value,
+                string.Empty,
+                "Carat   : " + Math.Round(Size, 3),
+                "Color   : " + Math.Round(ColorGrade, 3),
+                "Clarity : " + Math.Round(ClarityGrade, 3),
+                "Cut     : " + Math.Round(CutGrade, 3)
+            };
+        }
+
+        /// <summary>
+        /// Returns a string list that can be used in DocumentSaver
+        /// Contains only player accessable information
+        /// </summary>
+        public List<string> PlayerDocumentStrings()
+        {
+            return new List<string>
+            {
+                ToString() + " (" + ID + ")"
+            };
+        }
+
         /*-----Constructor-----*/
 
         /// <summary>
@@ -77,6 +107,8 @@ namespace Gemstone.Classes.DTO
         /// </summary>
         public Gem(GemstoneEnum? type = null, GemstoneCutEnum? cut = null, double? clarityGrade = null, double? colorGrade = null, double? cutGrade = null, double? size = null, GemColor? color = null)
         {
+            ID = Guid.NewGuid();
+
             Type = type ?? ValueGenerator.GetRandomGemstoneType();
             Cut = cut ?? ValueGenerator.GetRandomGemstoneCut();
             Color = color ?? ValueGenerator.GetRandomGemstoneColor(Type);

@@ -11,6 +11,9 @@ namespace Gemstone.Definitions
     /// </summary>
     internal static class StaticStrings
     {
+        /*----- File Path Strings -----*/
+        internal static string GemPath = "/Gemstones/";
+
         internal static string SizeTiny = "Tiny";
         internal static string SizeSmall = "Small";
         internal static string SizeAverage = "Average";
