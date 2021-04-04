@@ -1,10 +1,5 @@
 ﻿using Gemstone.Classes.DTO;
-using Gemstone.Classes.Logic;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gemstone.Definitions.Enums
 {
