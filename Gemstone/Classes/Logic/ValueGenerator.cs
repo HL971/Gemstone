@@ -18,7 +18,7 @@ namespace Gemstone.Classes.Logic
         /// <summary>
         /// The same formula is used for random clarity/cut/color grade values
         /// </summary>
-        internal static double GetRandomClarityCutorColorValue()
+        internal static double GetCommonRandomVariable()
         {
             return (100.0 - 600.0 * Math.Pow(_rng.NextDouble() - 0.5, 3))/100.0;
         }

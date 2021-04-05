@@ -36,7 +36,7 @@ namespace Gemstone.Definitions.Enums
                 case MetalEnum.Gold:
                     return 1000.0;
                 case MetalEnum.Electrum:
-                    return 200.0;
+                    return 500.0;
                 case MetalEnum.Silver:
                     return 100.0;
                 case MetalEnum.Brass:
@@ -80,6 +80,16 @@ namespace Gemstone.Definitions.Enums
                 new WeightedItem(1, MetalEnum.Mithril),
                 new WeightedItem(1, MetalEnum.Adamantine),
                 new WeightedItem(5, MetalEnum.Lead)
+            };
+
+        internal readonly static List<WeightedItem> WeightedTradeBarMetalList =
+            new List<WeightedItem>
+            {
+                new WeightedItem(1000, MetalEnum.Copper),
+                new WeightedItem(100, MetalEnum.Silver),
+                new WeightedItem(20, MetalEnum.Electrum),
+                new WeightedItem(10, MetalEnum.Gold),
+                new WeightedItem(1, MetalEnum.Platinum)
             };
     }
 }

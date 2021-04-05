@@ -13,6 +13,7 @@ namespace Gemstone.Definitions
     {
         /*----- File Path Strings -----*/
         internal static string GemPath = "/Gemstones/";
+        internal static string CurrencyPath = "/Currency/";
 
         internal static string SizeTiny = "Tiny";
         internal static string SizeSmall = "Small";

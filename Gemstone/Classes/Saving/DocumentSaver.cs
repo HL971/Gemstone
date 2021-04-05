@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Gemstone.Classes.Saving
 {
-    class DocumentSaver
+    public class DocumentSaver
     {
         private string BasePath => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
@@ -35,6 +35,23 @@ namespace Gemstone.Classes.Saving
             catch (Exception ex)
             {
                 var message = "Error saving single gemstone => " + ex.Message;
+                throw new InvalidOperationException(message, ex);
+            }
+        }
+
+        public void SaveCurrency(string filename, Currency currency)
+        {
+            var path = BasePath + StaticStrings.CurrencyPath;
+
+            try
+            {
+                var playerDoc = OpenDocument(filename, path);
+                WriteToDocument(playerDoc, currency.DocumentStrings());
+                playerDoc.Close();
+            }
+            catch (Exception ex)
+            {
+                var message = "Error saving currency => " + ex.Message;
                 throw new InvalidOperationException(message, ex);
             }
         }

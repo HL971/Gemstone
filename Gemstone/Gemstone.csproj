@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\DTO\Currency.cs" />
+    <Compile Include="Classes\Logic\CurrencyGenerator.cs" />
     <Compile Include="Classes\Saving\DocumentSaver.cs" />
     <Compile Include="Definitions\Enums\MetalEnum.cs" />
     <Compile Include="Views\Main.xaml.cs">

@@ -119,9 +119,9 @@ namespace Gemstone.Classes.DTO
 
             Color = color ?? ValueGenerator.GetRandomGemstoneColor(Type);
 
-            ClarityGrade = clarityGrade ?? ValueGenerator.GetRandomClarityCutorColorValue();
-            ColorGrade = colorGrade ?? ValueGenerator.GetRandomClarityCutorColorValue();
-            CutGrade = cutGrade ?? ValueGenerator.GetRandomClarityCutorColorValue();
+            ClarityGrade = clarityGrade ?? ValueGenerator.GetCommonRandomVariable();
+            ColorGrade = colorGrade ?? ValueGenerator.GetCommonRandomVariable();
+            CutGrade = cutGrade ?? ValueGenerator.GetCommonRandomVariable();
             Size = size ?? ValueGenerator.GetRandomSizeValue();
 
             SetGemTypeValues();
