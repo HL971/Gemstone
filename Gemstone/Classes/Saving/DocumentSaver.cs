@@ -56,6 +56,26 @@ namespace Gemstone.Classes.Saving
             }
         }
 
+        public void SaveCoinpurses(string filename, List<Currency> coinpurses)
+        {
+            var path = BasePath + StaticStrings.CurrencyPath;
+
+            try
+            {
+                var playerDoc = OpenDocument(filename, path);
+
+                foreach (var purse in coinpurses)
+                    WriteToDocument(playerDoc, purse.DocumentStrings());
+
+                playerDoc.Close();
+            }
+            catch (Exception ex)
+            {
+                var message = "Error saving coinpurses => " + ex.Message;
+                throw new InvalidOperationException(message, ex);
+            }
+        }
+
         /*----- Private Methods -----*/
 
         private void WriteToDocument(StreamWriter document, List<string> writeLines)

@@ -59,9 +59,16 @@
     <Compile Include="Classes\Logic\CurrencyGenerator.cs" />
     <Compile Include="Classes\Saving\DocumentSaver.cs" />
     <Compile Include="Definitions\Enums\MetalEnum.cs" />
+    <Compile Include="Views\CurrencyGeneratorView.xaml.cs">
+      <DependentUpon>CurrencyGeneratorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Main.xaml.cs">
       <DependentUpon>Main.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CurrencyGeneratorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GemWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

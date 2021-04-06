@@ -10,13 +10,23 @@ namespace Gemstone.Classes.Logic
         public static Currency GenerateForLevel(int level)
         {
             if (level < 5)
-                return GenerateForValue(4.52 * ValueGenerator.GetCommonRandomVariable());
+                return GenerateForValue(20 * ValueGenerator.GetCommonRandomVariable());
+            if (level < 7)
+                return GenerateForValue(50 * ValueGenerator.GetCommonRandomVariable());
+            if (level < 9)
+                return GenerateForValue(100 * ValueGenerator.GetCommonRandomVariable());
             if (level < 11)
-                return GenerateForValue(92.5 * ValueGenerator.GetCommonRandomVariable());
+                return GenerateForValue(250 * ValueGenerator.GetCommonRandomVariable());
+            if (level < 13)
+                return GenerateForValue(500 * ValueGenerator.GetCommonRandomVariable());
+            if (level < 15)
+                return GenerateForValue(1000 * ValueGenerator.GetCommonRandomVariable());
             if (level < 17)
-                return GenerateForValue(946.75 * ValueGenerator.GetCommonRandomVariable());
+                return GenerateForValue(2500 * ValueGenerator.GetCommonRandomVariable());
+            if (level < 19)
+                return GenerateForValue(5000 * ValueGenerator.GetCommonRandomVariable());
 
-            return GenerateForValue(8470 * ValueGenerator.GetCommonRandomVariable());
+            return GenerateForValue(8500 * ValueGenerator.GetCommonRandomVariable());
         }
 
         public static Currency GenerateForValue(double value)
@@ -28,40 +38,55 @@ namespace Gemstone.Classes.Logic
 
             var currency = new Currency();
 
-            if (rng.NextDouble() < 0.2)
+            if (rng.NextDouble() < 0.01)
                 (value, currency.TenLbGoldBar) = GetRandomQuantity(value, Currency.TenLbGoldBarValue);
-            if (rng.NextDouble() < 0.3)
+            if (rng.NextDouble() < 0.05)
                 (value, currency.FiveLbGoldBar) = GetRandomQuantity(value, Currency.FiveLbGoldBarValue);
-            if (rng.NextDouble() < 0.4)
+            if (rng.NextDouble() < 0.1)
                 (value, currency.TwoLbGoldBar) = GetRandomQuantity(value, Currency.TwoLbGoldBarValue);
-            if (rng.NextDouble() < 0.5)
+            if (rng.NextDouble() < 0.25)
                 (value, currency.OneLbGoldBar) = GetRandomQuantity(value, Currency.OneLbGoldBarValue);
 
-            if (rng.NextDouble() < 0.2)
+            if (rng.NextDouble() < 0.05)
                 (value, currency.TenLbSilverBar) = GetRandomQuantity(value, Currency.TenLbSilverBarValue);
-            if (rng.NextDouble() < 0.3)
+            if (rng.NextDouble() < 0.1)
                 (value, currency.FiveLbSilverBar) = GetRandomQuantity(value, Currency.FiveLbSilverBarValue);
-            if (rng.NextDouble() < 0.4)
+            if (rng.NextDouble() < 0.25)
                 (value, currency.TwoLbSilverBar) = GetRandomQuantity(value, Currency.TwoLbSilverBarValue);
             if (rng.NextDouble() < 0.5)
                 (value, currency.OneLbSilverBar) = GetRandomQuantity(value, Currency.OneLbSilverBarValue);
 
             (value, currency.PlatinumCoins) = GetRandomQuantity(value, Currency.PlatinumCoinValue);
-            (value, currency.GoldCoins) = GetRandomQuantity(value, Currency.GoldCoinValue);
 
             if (rng.NextDouble() < 0.2)
                 (value, currency.ElectrumCoins) = GetRandomQuantity(value, Currency.ElectrumCoinValue);
 
-            (value, currency.SilverCoins) = GetRandomQuantity(value, Currency.SilverCoinValue);
-            (_, currency.CopperCoins) = GetRandomQuantity(value, Currency.CopperCoinValue);
+            (value, currency.GoldCoins) = GetRandomQuantity(value, Currency.GoldCoinValue, true);
+            (value, currency.SilverCoins) = GetRemainingQuantity(value, Currency.SilverCoinValue);
+            (_, currency.CopperCoins) = GetRemainingQuantity(value, Currency.CopperCoinValue);
 
             return currency;
         }
 
-        private static (double value, int quantity) GetRandomQuantity(double originalValue, double itemValue)
+        private static (double value, int quantity) GetRandomQuantity(double originalValue, double itemValue, bool highPercent = false)
         {
-            var retVal = originalValue * rng.NextDouble();
+            double rand;
+            do
+            {
+                rand = rng.NextDouble();
+            }
+            while ((highPercent && rand < 0.75) || (!highPercent && rand > 0.25));
+
+            var retVal = originalValue * rand;
             var quantity = Math.Floor(retVal / itemValue);
+            originalValue -= quantity * itemValue;
+
+            return (originalValue, (int)quantity);
+        }
+
+        private static (double value, int quantity) GetRemainingQuantity(double originalValue, double itemValue)
+        {
+            var quantity = Math.Floor(originalValue / itemValue);
             originalValue -= quantity * itemValue;
 
             return (originalValue, (int)quantity);
