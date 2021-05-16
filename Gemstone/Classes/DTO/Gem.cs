@@ -96,7 +96,7 @@ namespace Gemstone.Classes.DTO
         {
             return new List<string>
             {
-                ToString() + " (" + ID + ")"
+                "(" + ID + ") - " + ToString()
             };
         }
 

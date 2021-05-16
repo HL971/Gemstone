@@ -56,6 +56,19 @@ namespace Gemstone.Classes.Logic
             if (rng.NextDouble() < 0.5)
                 (value, currency.OneLbSilverBar) = GetRandomQuantity(value, Currency.OneLbSilverBarValue);
 
+            if (rng.NextDouble() < 0.5)
+            {
+                for (int x = 0; x < 5; x++)
+                {
+                    var gem = new Gem();
+                    if (gem.Value < value)
+                    {
+                        value -= gem.Value;
+                        currency.Gems.Add(gem);
+                    }
+                }
+            }
+
             (value, currency.PlatinumCoins) = GetRandomQuantity(value, Currency.PlatinumCoinValue);
 
             if (rng.NextDouble() < 0.2)

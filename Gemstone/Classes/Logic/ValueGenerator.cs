@@ -1,4 +1,5 @@
 ﻿using Gemstone.Classes.DTO;
+using Gemstone.Classes.Functional;
 using Gemstone.Definitions.Enums;
 using System;
 using System.Collections;
@@ -87,6 +88,18 @@ namespace Gemstone.Classes.Logic
             }
 
             return 0;
+        }
+
+        internal static int RollDice(Die dice)
+        {
+            var result = 0;
+
+            for (int x = 0; x < dice.Count; x++)
+            {
+                result += (_rng.Next(dice.Size) + 1);
+            }
+
+            return result;
         }
     }
 }

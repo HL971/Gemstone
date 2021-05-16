@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Gemstone.Classes.DTO
 {
@@ -12,16 +13,18 @@ namespace Gemstone.Classes.DTO
         public static double FiveLbSilverBarValue => SilverBarValuePerLb * 5;
         public static double TenLbSilverBarValue => SilverBarValuePerLb * 10;
 
-        public static double OneLbGoldBarValue => SilverBarValuePerLb;
-        public static double TwoLbGoldBarValue => SilverBarValuePerLb * 2;
-        public static double FiveLbGoldBarValue => SilverBarValuePerLb * 5;
-        public static double TenLbGoldBarValue => SilverBarValuePerLb * 10;
+        public static double OneLbGoldBarValue => GoldBarValuePerLb;
+        public static double TwoLbGoldBarValue => GoldBarValuePerLb * 2;
+        public static double FiveLbGoldBarValue => GoldBarValuePerLb * 5;
+        public static double TenLbGoldBarValue => GoldBarValuePerLb * 10;
 
         public static double CopperCoinValue => 0.01;
         public static double SilverCoinValue => 0.1;
         public static double ElectrumCoinValue => 0.5;
         public static double GoldCoinValue => 1.0;
         public static double PlatinumCoinValue => 10.0;
+
+        public List<Gem> Gems { get; set; } = new List<Gem>();
 
         public int CopperCoins { get; set; }
         public int SilverCoins { get; set; }
@@ -55,7 +58,8 @@ namespace Gemstone.Classes.DTO
                     + OneLbGoldBar * OneLbGoldBarValue
                     + TwoLbGoldBar * TwoLbGoldBarValue
                     + FiveLbGoldBar * FiveLbGoldBarValue
-                    + TenLbGoldBar * TenLbGoldBarValue;
+                    + TenLbGoldBar * TenLbGoldBarValue
+                    + Gems.Sum(x => x.Value);
             }
         }
 
@@ -64,9 +68,9 @@ namespace Gemstone.Classes.DTO
             return Value.ToString() + " GP";
         }
 
-        public List<string> DocumentStrings()
+        public List<string> GMDocumentStrings()
         {
-            return new List<string>
+            var list = new List<string>
             {
                 "Currency Total Value : " + ToString(),
                 string.Empty,
@@ -86,6 +90,57 @@ namespace Gemstone.Classes.DTO
                 "Silver Coins         : " + SilverCoins,
                 "Copper Coins         : " + CopperCoins
             };
+
+            if (Gems.Count > 0)
+            {
+                list.Add(string.Empty);
+                list.Add("----- Gems -----");
+                list.Add(string.Empty);
+                foreach (var gem in Gems)
+                {
+                    list.AddRange(gem.GMDocumentStrings());
+                    list.Add(string.Empty);
+                }
+            }
+
+            return list;
+        }
+
+        public List<string> DocumentStrings()
+        {
+            var list = new List<string>
+            {
+                "Currency Total Value : " + ToString(),
+                string.Empty,
+                "Gold Bar - 10 lb     : " + TenLbGoldBar,
+                "Gold Bar - 5 lb      : " + FiveLbGoldBar,
+                "Gold Bar - 2 lb      : " + TwoLbGoldBar,
+                "Gold Bar - 1 lb      : " + OneLbGoldBar,
+                string.Empty,
+                "Silver Bar - 10 lb   : " + TenLbSilverBar,
+                "Silver Bar - 5 lb    : " + FiveLbSilverBar,
+                "Silver Bar - 2 lb    : " + TwoLbSilverBar,
+                "Silver Bar - 1 lb    : " + OneLbSilverBar,
+                string.Empty,
+                "Platinum Coins       : " + PlatinumCoins,
+                "Gold Coins           : " + GoldCoins,
+                "Electrum Coins       : " + ElectrumCoins,
+                "Silver Coins         : " + SilverCoins,
+                "Copper Coins         : " + CopperCoins
+            };
+
+            if (Gems.Count > 0)
+            {
+                list.Add(string.Empty);
+                list.Add("----- Gems -----");
+                list.Add(string.Empty);
+                foreach (var gem in Gems)
+                {
+                    list.AddRange(gem.PlayerDocumentStrings());
+                }
+            }
+
+            return list;
         }
 
         public void Merge(Currency addition)
@@ -105,6 +160,8 @@ namespace Gemstone.Classes.DTO
             ElectrumCoins += addition.ElectrumCoins;
             SilverCoins += addition.SilverCoins;
             CopperCoins += addition.CopperCoins;
+
+            Gems.AddRange(addition.Gems);
         }
     }
 }

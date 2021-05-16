@@ -63,11 +63,14 @@ namespace Gemstone.Classes.Saving
             try
             {
                 var playerDoc = OpenDocument(filename, path);
-
                 foreach (var purse in coinpurses)
                     WriteToDocument(playerDoc, purse.DocumentStrings());
-
                 playerDoc.Close();
+
+                var GMDoc = OpenDocument("GM" + filename, path);
+                foreach (var purse in coinpurses)
+                    WriteToDocument(GMDoc, purse.GMDocumentStrings());
+                GMDoc.Close();
             }
             catch (Exception ex)
             {
