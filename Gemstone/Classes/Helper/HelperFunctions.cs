@@ -1,5 +1,7 @@
-﻿using Gemstone.Definitions;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Gemstone.Definitions;
 
 namespace Gemstone.Classes.Helper
 {
@@ -29,6 +31,12 @@ namespace Gemstone.Classes.Helper
             else if (size < 250)
                 return StaticStrings.SizeGargantuan;
             return StaticStrings.SizeColossal;
+        }
+
+        /// <returns>An IEnumerable of all values for given enum 'T'</returns>
+        public static IEnumerable<T> GetAllEnumValues<T>()
+        {
+            return Enum.GetValues(typeof(T)).Cast<T>();
         }
     }
 }

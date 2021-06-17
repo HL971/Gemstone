@@ -2,19 +2,31 @@
 using Gemstone.Classes.Functional;
 using Gemstone.Definitions.Enums;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Gemstone.Classes.DTO
 {
     public class Weapon
     {
+        // ----- Properties --- //
         public WeaponType Type { get; private set; }
+        public int MagicModifier { get; private set; }
         public double Cost { get; private set; }
         public double Weight { get; private set; }
+        public bool IsMagic { get; private set; }
         public List<DamageDice> Damage { get; private set; }
         public List<WeaponProperty> Properties { get; private set; }
+        public List<MagicWeaponProperty> MagicProperties { get; private set; }
         public ObjectMaterials Material { get; private set; }
 
-        public Weapon(WeaponType type, AdditionalWeaponPropertiesDTO additionalProperties)
+        private string WeaponTypeString => MagicProperties.Count > 0
+            ? MagicProperties.First().ToString() + " " + Type.WeaponTypeString()
+            : MagicModifier != 0
+                ? "+" + MagicModifier + " " + Type.WeaponTypeString()
+                : Type.WeaponTypeString();
+
+        // ----- Public Methods --- //
+        public Weapon(WeaponType type, AdditionalWeaponPropertiesDTO additionalProperties = null)
         {
             Type = type;
             Damage = new List<DamageDice>();
@@ -25,10 +37,47 @@ namespace Gemstone.Classes.DTO
             if (additionalProperties != null)
             {
                 Material = additionalProperties.Material;
+                MagicModifier = additionalProperties.MagicModifier;
                 Damage.AddRange(additionalProperties.AdditionalDamage);
+                MagicProperties.AddRange(additionalProperties.MagicProperties);
             }
+
+            IsMagic = Damage.Any(x => x.IsMagic);
         }
 
+        public List<Damage> RollDamage(bool isCritical = false)
+        {
+            var damage = new List<Damage>();
+
+            foreach(var die in Damage)
+            {
+                damage.Add(die.RollDamage(isCritical));
+            }
+
+            return damage;
+        }
+
+        public List<string> PlayerDocumentStrings()
+        {
+            var strings = new List<string>
+            {
+                WeaponTypeString,
+                string.Empty,
+                Damage.First().DamageString(MagicModifier)
+            };
+
+            if (Damage.Count > 1)
+            {
+                for (int x = 1; x < Damage.Count; x++)
+                {
+                    strings.Add(Damage[x].DamageString());
+                }
+            }
+
+            return strings;
+        }
+
+        // ----- Private Methods --- //
         private void BasicWeaponSetup(bool isMagic)
         {
             switch (Type)
@@ -283,18 +332,6 @@ namespace Gemstone.Classes.DTO
                 default:
                     throw new InvalidOperationException("Error: Weapon Type has not been properly set up");
             }
-        }
-
-        public List<Damage> RollDamage(bool isCritical = false)
-        {
-            var damage = new List<Damage>();
-
-            foreach(var die in Damage)
-            {
-                damage.Add(die.RollDamage(isCritical));
-            }
-
-            return damage;
         }
     }
 }

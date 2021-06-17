@@ -26,5 +26,10 @@ namespace Gemstone.Classes.Functional
                 ? ValueGenerator.RollDice(this) + ValueGenerator.RollDice(this)
                 : ValueGenerator.RollDice(this);
         }
+
+        public override string ToString()
+        {
+            return Count + "d" + Size;
+        }
     }
 }

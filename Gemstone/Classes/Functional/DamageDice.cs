@@ -19,5 +19,12 @@ namespace Gemstone.Classes.Functional
         {
             return new Damage(Die.Roll(isCritical), Type, IsMagic);
         }
+
+        public string DamageString(int modifier = 0)
+        {
+            return modifier > 0
+                ? Die + "+" + modifier + " " + Type
+                : Die + " " + Type;
+        }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gemstone.Definitions.Enums
+﻿namespace Gemstone.Definitions.Enums
 {
     public enum WeaponType
     {
@@ -45,5 +39,25 @@ namespace Gemstone.Definitions.Enums
         HeavyCrossbow,
         Longbow,
         Net
+    }
+
+    internal static class WeaponTypeAdditions
+    {
+        internal static string WeaponTypeString(this WeaponType type)
+        {
+            switch (type)
+            {
+                case WeaponType.LightHammer:
+                    return "Light Hammer";
+                case WeaponType.LightCrossbow:
+                    return "Light Crossbow";
+                case WeaponType.HandCrossbow:
+                    return "Hand Crossbow";
+                case WeaponType.HeavyCrossbow:
+                    return "Heavy Crossbow";
+                default:
+                    return type.ToString();
+            }
+        }
     }
 }

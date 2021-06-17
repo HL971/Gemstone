@@ -101,5 +101,10 @@ namespace Gemstone.Classes.Logic
 
             return result;
         }
+
+        internal static WeaponType GetRandomWeaponType(List<WeaponType> weaponTypes)
+        {
+            return weaponTypes[_rng.Next(weaponTypes.Count)];
+        }
     }
 }
