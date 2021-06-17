@@ -96,6 +96,7 @@ namespace Gemstone.Classes.Saving
             try
             {
                 ValidateFilename(filename);
+                Directory.CreateDirectory(path);
 
                 return new StreamWriter(path + filename, append: append);
             }
