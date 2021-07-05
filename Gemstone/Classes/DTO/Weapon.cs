@@ -19,7 +19,7 @@ namespace Gemstone.Classes.DTO
         public List<MagicWeaponProperty> MagicProperties { get; private set; }
         public ObjectMaterials Material { get; private set; }
 
-        private string WeaponTypeString => MagicProperties.Count > 0
+        private string WeaponTypeString => MagicProperties?.Count > 0
             ? MagicProperties.First().ToString() + " " + Type.WeaponTypeString()
             : MagicModifier != 0
                 ? "+" + MagicModifier + " " + Type.WeaponTypeString()
@@ -62,16 +62,28 @@ namespace Gemstone.Classes.DTO
             var strings = new List<string>
             {
                 WeaponTypeString,
-                string.Empty,
-                Damage.First().DamageString(MagicModifier)
+                Type.WeaponClassificationString()
             };
 
-            if (Damage.Count > 1)
+            if (Damage.Count > 0) // Anything but basic non-magic net
             {
+                strings.Add(string.Empty);
+                strings.Add(Damage.First().DamageString(MagicModifier));
+
                 for (int x = 1; x < Damage.Count; x++)
                 {
                     strings.Add(Damage[x].DamageString());
                 }
+            }
+
+            if (Properties.Count > 0)
+            {
+                strings.Add(string.Empty);
+                strings.Add("- Properties -");
+                strings.Add(string.Empty);
+
+                foreach (var property in Properties)
+                    strings.Add(property.ToString());
             }
 
             return strings;

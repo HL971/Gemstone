@@ -23,7 +23,7 @@ namespace Gemstone.Classes.Logic
                                                             WeaponType.Scimitar
                                                         };
 
-        public static Weapon GetRandomWeapon()
+        public static Weapon GetRandomBasicWeapon()
         {
             return new Weapon(ValueGenerator.GetRandomWeaponType(AllWeapons));
         }

@@ -79,6 +79,23 @@ namespace Gemstone.Classes.Saving
             }
         }
 
+        public void SaveSingleWeapon(string filename, Weapon weapon)
+        {
+            var path = BasePath + StaticStrings.WeaponPath;
+
+            try
+            {
+                var playerDoc = OpenDocument(filename, path, false);
+                WriteToDocument(playerDoc, weapon.PlayerDocumentStrings());
+                playerDoc.Close();
+            }
+            catch (Exception ex)
+            {
+                var message = "Error saving single weapon => " + ex.Message;
+                throw new InvalidOperationException(message, ex);
+            }
+        }
+
         /*----- Private Methods -----*/
 
         private void WriteToDocument(StreamWriter document, List<string> writeLines)

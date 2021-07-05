@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gemstone.Definitions
+﻿namespace Gemstone.Definitions
 {
     /// <summary>
     /// Resource file for static strings
@@ -14,6 +8,7 @@ namespace Gemstone.Definitions
         /*----- File Path Strings -----*/
         internal static string GemPath = "/Gemstones/";
         internal static string CurrencyPath = "/Currency/";
+        internal static string WeaponPath = "/Weapon/";
 
         internal static string SizeTiny = "Tiny";
         internal static string SizeSmall = "Small";
@@ -22,5 +17,10 @@ namespace Gemstone.Definitions
         internal static string SizeHuge = "Huge";
         internal static string SizeGargantuan = "Gargantuan";
         internal static string SizeColossal = "Colossal";
+
+        internal static string SimpleMelee = "Simple Melee Weapon";
+        internal static string SimpleRanged = "Simple Ranged Weapon";
+        internal static string MartialMelee = "Martial Melee Weapon";
+        internal static string MartialRanged = "Martial Ranged Weapon";
     }
 }

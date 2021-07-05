@@ -35,5 +35,11 @@ namespace Gemstone.Views
             var window = new CurrencyGeneratorView();
             window.Show();
         }
+
+        public void OnlyWeapon_Click(Object sender, EventArgs e)
+        {
+            var window = new WeaponWindow();
+            window.Show();
+        }
     }
 }
