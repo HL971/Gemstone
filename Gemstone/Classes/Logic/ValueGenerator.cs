@@ -1,5 +1,7 @@
 ﻿using Gemstone.Classes.DTO;
 using Gemstone.Classes.Functional;
+using Gemstone.Classes.Helper;
+using Gemstone.Definitions;
 using Gemstone.Definitions.Enums;
 using System;
 using System.Collections;
@@ -13,7 +15,6 @@ namespace Gemstone.Classes.Logic
     /// </summary>
     internal static class ValueGenerator
     {
-        private static readonly Random _rng = new Random();
         private static readonly GemstoneCutEnum[] _gemstoneCuts = (GemstoneCutEnum[])Enum.GetValues(typeof(GemstoneCutEnum));
 
         /// <summary>
@@ -21,12 +22,12 @@ namespace Gemstone.Classes.Logic
         /// </summary>
         internal static double GetCommonRandomVariable()
         {
-            return (100.0 - 600.0 * Math.Pow(_rng.NextDouble() - 0.5, 3))/100.0;
+            return (100.0 - 600.0 * Math.Pow(RandomNumberGenerator.NextDouble() - 0.5, 3))/100.0;
         }
 
         internal static double GetRandomSizeValue()
         {
-            return Math.Round(Math.Pow(2400, 0.821887 - _rng.NextDouble()), 2);
+            return Math.Round(Math.Pow(2400, 0.821887 - RandomNumberGenerator.NextDouble()), 2);
         }
 
         /// <summary>
@@ -42,7 +43,12 @@ namespace Gemstone.Classes.Logic
         /// </summary>
         internal static GemstoneCutEnum GetRandomGemstoneCut()
         {
-            return _gemstoneCuts[_rng.Next(_gemstoneCuts.Length)];
+            return _gemstoneCuts[RandomNumberGenerator.Next(_gemstoneCuts.Length)];
+        }
+
+        internal static AdditionalWeaponPropertiesDTO GetRandomMagicWeaponDTO()
+        {
+            return (AdditionalWeaponPropertiesDTO)GetRandomWeightedItem(MagicWeapons.MagicWeaponList);
         }
 
         internal static GemColor GetRandomGemstoneColor(GemstoneEnum gem)
@@ -77,7 +83,7 @@ namespace Gemstone.Classes.Logic
 
             var totalWeight = correctTypeList.Sum(x => x.Weight);
 
-            var random = _rng.Next(totalWeight);
+            var random = RandomNumberGenerator.Next(totalWeight);
 
             var currentWeight = 0;
             for (int x = 0; x < correctTypeList.Count; x++)
@@ -96,7 +102,7 @@ namespace Gemstone.Classes.Logic
 
             for (int x = 0; x < dice.Count; x++)
             {
-                result += (_rng.Next(dice.Size) + 1);
+                result += RandomNumberGenerator.Next(dice.Size) + 1;
             }
 
             return result;
@@ -104,7 +110,7 @@ namespace Gemstone.Classes.Logic
 
         internal static WeaponType GetRandomWeaponType(List<WeaponType> weaponTypes)
         {
-            return weaponTypes[_rng.Next(weaponTypes.Count)];
+            return weaponTypes[RandomNumberGenerator.Next(weaponTypes.Count)];
         }
     }
 }

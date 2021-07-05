@@ -57,20 +57,23 @@
     </ApplicationDefinition>
     <Compile Include="Classes\DTO\Currency.cs" />
     <Compile Include="Classes\DTO\AdditionalWeaponPropertiesDTO.cs" />
-    <Compile Include="Classes\DTO\MagicWeaponProperty.cs" />
     <Compile Include="Classes\Functional\Damage.cs" />
     <Compile Include="Classes\Functional\Die.cs" />
     <Compile Include="Classes\DTO\Weapon.cs" />
     <Compile Include="Classes\Functional\DamageDice.cs" />
+    <Compile Include="Classes\Helper\RandomNumberGenerator.cs" />
     <Compile Include="Classes\Logic\WeaponGenerator.cs" />
     <Compile Include="Definitions\Enums\DamageType.cs" />
     <Compile Include="Classes\Functional\WeaponProperty.cs" />
+    <Compile Include="Definitions\Enums\MagicItemRarity.cs" />
     <Compile Include="Definitions\Enums\ObjectMaterials.cs" />
     <Compile Include="Definitions\Enums\WeaponPropertyType.cs" />
     <Compile Include="Definitions\Enums\WeaponType.cs" />
     <Compile Include="Classes\Logic\CurrencyGenerator.cs" />
     <Compile Include="Classes\Saving\DocumentSaver.cs" />
     <Compile Include="Definitions\Enums\MetalEnum.cs" />
+    <Compile Include="Definitions\MagicWeapons.cs" />
+    <Compile Include="Definitions\StaticIntegers.cs" />
     <Compile Include="Views\CurrencyGeneratorView.xaml.cs">
       <DependentUpon>CurrencyGeneratorView.xaml</DependentUpon>
     </Compile>

@@ -1,12 +1,11 @@
 ﻿using Gemstone.Classes.DTO;
+using Gemstone.Classes.Helper;
 using System;
 
 namespace Gemstone.Classes.Logic
 {
     public static class CurrencyGenerator
     {
-        private static readonly Random rng = new Random();
-        
         public static Currency GenerateForLevel(int level)
         {
             if (level < 5)
@@ -38,25 +37,25 @@ namespace Gemstone.Classes.Logic
 
             var currency = new Currency();
 
-            if (rng.NextDouble() < 0.01)
+            if (RandomNumberGenerator.NextDouble() < 0.01)
                 (value, currency.TenLbGoldBar) = GetRandomQuantity(value, Currency.TenLbGoldBarValue);
-            if (rng.NextDouble() < 0.05)
+            if (RandomNumberGenerator.NextDouble() < 0.05)
                 (value, currency.FiveLbGoldBar) = GetRandomQuantity(value, Currency.FiveLbGoldBarValue);
-            if (rng.NextDouble() < 0.1)
+            if (RandomNumberGenerator.NextDouble() < 0.1)
                 (value, currency.TwoLbGoldBar) = GetRandomQuantity(value, Currency.TwoLbGoldBarValue);
-            if (rng.NextDouble() < 0.25)
+            if (RandomNumberGenerator.NextDouble() < 0.25)
                 (value, currency.OneLbGoldBar) = GetRandomQuantity(value, Currency.OneLbGoldBarValue);
 
-            if (rng.NextDouble() < 0.05)
+            if (RandomNumberGenerator.NextDouble() < 0.05)
                 (value, currency.TenLbSilverBar) = GetRandomQuantity(value, Currency.TenLbSilverBarValue);
-            if (rng.NextDouble() < 0.1)
+            if (RandomNumberGenerator.NextDouble() < 0.1)
                 (value, currency.FiveLbSilverBar) = GetRandomQuantity(value, Currency.FiveLbSilverBarValue);
-            if (rng.NextDouble() < 0.25)
+            if (RandomNumberGenerator.NextDouble() < 0.25)
                 (value, currency.TwoLbSilverBar) = GetRandomQuantity(value, Currency.TwoLbSilverBarValue);
-            if (rng.NextDouble() < 0.5)
+            if (RandomNumberGenerator.NextDouble() < 0.5)
                 (value, currency.OneLbSilverBar) = GetRandomQuantity(value, Currency.OneLbSilverBarValue);
 
-            if (rng.NextDouble() < 0.5)
+            if (RandomNumberGenerator.NextDouble() < 0.5)
             {
                 for (int x = 0; x < 5; x++)
                 {
@@ -71,7 +70,7 @@ namespace Gemstone.Classes.Logic
 
             (value, currency.PlatinumCoins) = GetRandomQuantity(value, Currency.PlatinumCoinValue);
 
-            if (rng.NextDouble() < 0.2)
+            if (RandomNumberGenerator.NextDouble() < 0.2)
                 (value, currency.ElectrumCoins) = GetRandomQuantity(value, Currency.ElectrumCoinValue);
 
             (value, currency.GoldCoins) = GetRandomQuantity(value, Currency.GoldCoinValue, true);
@@ -86,7 +85,7 @@ namespace Gemstone.Classes.Logic
             double rand;
             do
             {
-                rand = rng.NextDouble();
+                rand = RandomNumberGenerator.NextDouble();
             }
             while ((highPercent && rand < 0.75) || (!highPercent && rand > 0.25));
 

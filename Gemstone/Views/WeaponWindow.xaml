@@ -7,10 +7,12 @@
         mc:Ignorable="d"
         Title="WeaponWindow" Height="450" Width="500">
     <Grid>
+        <ScrollViewer MaxHeight="350" Width="Auto" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" VerticalAlignment="Top">
+            <TextBlock Name="Display" HorizontalAlignment="Left" TextWrapping="Wrap" Text="-" VerticalAlignment="Top" Width="472" Height="Auto"/>
+        </ScrollViewer>
+
         <Button Content="Generate Weapon" HorizontalAlignment="Left" Margin="10,389,0,0" VerticalAlignment="Top" Width="201" Click="GenerateWeapon_Click"/>
         <Button Content="Save Weapon" HorizontalAlignment="Left" Margin="282,389,0,0" VerticalAlignment="Top" Width="200" Click="SaveWeapon_Click"/>
-        <TextBlock Name="Display" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="-" VerticalAlignment="Top" Width="472" Height="346"/>
         <TextBox Name="Filename" HorizontalAlignment="Left" Height="23" Margin="281,361,0,0" TextWrapping="Wrap" Text="FileName.Txt" VerticalAlignment="Top" Width="201"/>
-
     </Grid>
 </Window>

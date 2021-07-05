@@ -1,11 +1,8 @@
 ﻿using Gemstone.Classes.DTO;
 using Gemstone.Classes.Helper;
 using Gemstone.Definitions.Enums;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gemstone.Classes.Logic
 {
@@ -13,19 +10,25 @@ namespace Gemstone.Classes.Logic
     {
         internal static List<WeaponType> AllWeapons => HelperFunctions.GetAllEnumValues<WeaponType>().ToList();
 
-        /// <summary>
-        /// Swords that cause Slashing Damage
-        /// </summary>
-        internal static List<WeaponType> VorpalWeapons => new List<WeaponType>
-                                                        {
-                                                            WeaponType.Greatsword,
-                                                            WeaponType.Longsword,
-                                                            WeaponType.Scimitar
-                                                        };
-
         public static Weapon GetRandomBasicWeapon()
         {
             return new Weapon(ValueGenerator.GetRandomWeaponType(AllWeapons));
+        }
+
+        public static Weapon GetCompletelyRandomWeapon()
+        {
+            if (RandomNumberGenerator.NextDouble() < 0.05)
+            {
+                var weaponDto = ValueGenerator.GetRandomMagicWeaponDTO();
+                var type = weaponDto.RestrictedToTypes.Count > 0
+                    ? ValueGenerator.GetRandomWeaponType(weaponDto.RestrictedToTypes)
+                    : ValueGenerator.GetRandomWeaponType(AllWeapons);
+                return new Weapon(type, weaponDto);
+            }
+            else
+            {
+                return GetRandomBasicWeapon();
+            }
         }
     }
 }

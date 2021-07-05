@@ -9,18 +9,25 @@ namespace Gemstone.Classes.DTO
     public class Weapon
     {
         // ----- Properties --- //
+        public string Name { get; private set; }
         public WeaponType Type { get; private set; }
         public int MagicModifier { get; private set; }
+        public MagicItemRarity MagicItemRarity { get; private set; }
         public double Cost { get; private set; }
         public double Weight { get; private set; }
         public bool IsMagic { get; private set; }
+        public bool RequiresAttunement { get; private set; }
+        public bool IsSentient { get; set; }
+        public bool NamePostfix { get; set; }
         public List<DamageDice> Damage { get; private set; }
         public List<WeaponProperty> Properties { get; private set; }
-        public List<MagicWeaponProperty> MagicProperties { get; private set; }
+        public List<string> MagicProperties { get; private set; }
         public ObjectMaterials Material { get; private set; }
 
-        private string WeaponTypeString => MagicProperties?.Count > 0
-            ? MagicProperties.First().ToString() + " " + Type.WeaponTypeString()
+        private string WeaponTypeString => Name != null
+            ? NamePostfix
+                ? Type.WeaponTypeString() + " " + Name
+                : Name + " " + Type.WeaponTypeString()
             : MagicModifier != 0
                 ? "+" + MagicModifier + " " + Type.WeaponTypeString()
                 : Type.WeaponTypeString();
@@ -31,6 +38,7 @@ namespace Gemstone.Classes.DTO
             Type = type;
             Damage = new List<DamageDice>();
             Properties = new List<WeaponProperty>();
+            MagicProperties = new List<string>();
 
             BasicWeaponSetup(additionalProperties != null ? additionalProperties.IsMagic : false);
             
@@ -40,9 +48,13 @@ namespace Gemstone.Classes.DTO
                 MagicModifier = additionalProperties.MagicModifier;
                 Damage.AddRange(additionalProperties.AdditionalDamage);
                 MagicProperties.AddRange(additionalProperties.MagicProperties);
+                RequiresAttunement = additionalProperties.RequiresAttunement;
+                Name = additionalProperties.Name;
+                NamePostfix = additionalProperties.NamePostfix;
+                IsMagic = additionalProperties.IsMagic;
+                IsSentient = additionalProperties.IsSentient;
+                MagicItemRarity = additionalProperties.MagicItemRarity;
             }
-
-            IsMagic = Damage.Any(x => x.IsMagic);
         }
 
         public List<Damage> RollDamage(bool isCritical = false)
@@ -65,6 +77,9 @@ namespace Gemstone.Classes.DTO
                 Type.WeaponClassificationString()
             };
 
+            if (IsMagic)
+                strings.Add("Magic Weapon");
+
             if (Damage.Count > 0) // Anything but basic non-magic net
             {
                 strings.Add(string.Empty);
@@ -84,6 +99,14 @@ namespace Gemstone.Classes.DTO
 
                 foreach (var property in Properties)
                     strings.Add(property.ToString());
+            }
+
+            if (MagicProperties.Count > 0)
+            {
+                strings.Add(string.Empty);
+
+                foreach (var property in MagicProperties)
+                    strings.Add(property);
             }
 
             return strings;

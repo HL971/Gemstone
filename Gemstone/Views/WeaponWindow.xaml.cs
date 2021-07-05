@@ -2,18 +2,7 @@
 using Gemstone.Classes.Logic;
 using Gemstone.Classes.Saving;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Gemstone.Views
 {
@@ -30,7 +19,7 @@ namespace Gemstone.Views
 
         private void GenerateWeapon_Click(object sender, RoutedEventArgs e)
         {
-            Weapon = WeaponGenerator.GetRandomBasicWeapon();
+            Weapon = WeaponGenerator.GetCompletelyRandomWeapon();
             UpdateDisplay();
         }
 
