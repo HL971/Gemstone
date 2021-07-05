@@ -17,7 +17,7 @@ namespace Gemstone.Classes.Logic
 
         public static Weapon GetCompletelyRandomWeapon()
         {
-            if (RandomNumberGenerator.NextDouble() < 0.05)
+            if (RandomNumberGenerator.NextDouble() < 0.95)
             {
                 var weaponDto = ValueGenerator.GetRandomMagicWeaponDTO();
                 var type = weaponDto.RestrictedToTypes.Count > 0

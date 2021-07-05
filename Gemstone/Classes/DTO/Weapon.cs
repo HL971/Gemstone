@@ -17,17 +17,23 @@ namespace Gemstone.Classes.DTO
         public double Weight { get; private set; }
         public bool IsMagic { get; private set; }
         public bool RequiresAttunement { get; private set; }
-        public bool IsSentient { get; set; }
-        public bool NamePostfix { get; set; }
+        public bool IsSentient { get; private set; }
+        public Alignment Alignment { get; private set; }
+        public bool AttunementAlignment { get; private set; }
+        public bool NamePostfix { get; private set; }
+        public bool ReplaceName { get; private set; }
         public List<DamageDice> Damage { get; private set; }
         public List<WeaponProperty> Properties { get; private set; }
         public List<string> MagicProperties { get; private set; }
+        public List<string> ExternalDescriptions { get; private set; }
         public ObjectMaterials Material { get; private set; }
 
         private string WeaponTypeString => Name != null
-            ? NamePostfix
-                ? Type.WeaponTypeString() + " " + Name
-                : Name + " " + Type.WeaponTypeString()
+            ? ReplaceName
+                ? Name
+                : NamePostfix
+                    ? Type.WeaponTypeString() + " " + Name
+                    : Name + " " + Type.WeaponTypeString()
             : MagicModifier != 0
                 ? "+" + MagicModifier + " " + Type.WeaponTypeString()
                 : Type.WeaponTypeString();
@@ -39,21 +45,34 @@ namespace Gemstone.Classes.DTO
             Damage = new List<DamageDice>();
             Properties = new List<WeaponProperty>();
             MagicProperties = new List<string>();
+            ExternalDescriptions = new List<string>();
 
             BasicWeaponSetup(additionalProperties != null ? additionalProperties.IsMagic : false);
             
             if (additionalProperties != null)
             {
+                if (additionalProperties.ReplaceBaseDamageType)
+                {
+                    var newDamage = new DamageDice(Damage.First().Die, additionalProperties.ReplacementDamageType, additionalProperties.IsMagic);
+                    Damage = new List<DamageDice> { newDamage };
+                }
+
                 Material = additionalProperties.Material;
                 MagicModifier = additionalProperties.MagicModifier;
                 Damage.AddRange(additionalProperties.AdditionalDamage);
                 MagicProperties.AddRange(additionalProperties.MagicProperties);
                 RequiresAttunement = additionalProperties.RequiresAttunement;
+                AttunementAlignment = additionalProperties.AttunementRequiresMatchingAlignment;
                 Name = additionalProperties.Name;
                 NamePostfix = additionalProperties.NamePostfix;
+                ReplaceName = additionalProperties.ReplaceName;
                 IsMagic = additionalProperties.IsMagic;
                 IsSentient = additionalProperties.IsSentient;
                 MagicItemRarity = additionalProperties.MagicItemRarity;
+                Alignment = additionalProperties.Alignment;
+                ExternalDescriptions.AddRange(additionalProperties.ExternalDescription);
+                Properties.AddRange(additionalProperties.AdditionalProperties);
+
             }
         }
 
@@ -80,15 +99,39 @@ namespace Gemstone.Classes.DTO
             if (IsMagic)
                 strings.Add("Magic Weapon");
 
+            if (RequiresAttunement)
+            {
+                if (AttunementAlignment)
+                    strings.Add("Requires Attunement by a creature of alignment " + Alignment);
+                else
+                    strings.Add("Requires Attunement");
+            }
+
+            if (MagicModifier > 0)
+            {
+                strings.Add(string.Empty);
+                strings.Add("+" + MagicModifier + " to hit");
+            }
+
             if (Damage.Count > 0) // Anything but basic non-magic net
             {
                 strings.Add(string.Empty);
+
                 strings.Add(Damage.First().DamageString(MagicModifier));
 
                 for (int x = 1; x < Damage.Count; x++)
                 {
                     strings.Add(Damage[x].DamageString());
                 }
+            }
+
+            if (ExternalDescriptions.Count > 0)
+            {
+                strings.Add(string.Empty);
+                strings.Add("- Description -");
+                strings.Add(string.Empty);
+
+                strings.AddRange(ExternalDescriptions);
             }
 
             if (Properties.Count > 0)
@@ -105,8 +148,7 @@ namespace Gemstone.Classes.DTO
             {
                 strings.Add(string.Empty);
 
-                foreach (var property in MagicProperties)
-                    strings.Add(property);
+                strings.AddRange(MagicProperties);
             }
 
             return strings;
@@ -260,7 +302,7 @@ namespace Gemstone.Classes.DTO
                 case WeaponType.Longsword:
                     Cost = 15;
                     Weight = 3;
-                    Damage.Add(new DamageDice(new Die(1, 8), DamageType.Bludgeoning, isMagic));
+                    Damage.Add(new DamageDice(new Die(1, 8), DamageType.Slashing, isMagic));
                     Properties.Add(new WeaponProperty(WeaponPropertyType.Versatile, new Die(1, 10)));
                     break;
                 case WeaponType.Maul:

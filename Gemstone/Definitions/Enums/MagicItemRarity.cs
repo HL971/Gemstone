@@ -1,7 +1,10 @@
-﻿namespace Gemstone.Definitions.Enums
+﻿using System;
+
+namespace Gemstone.Definitions.Enums
 {
     public enum MagicItemRarity
     {
+        Undefined,
         Common,
         Uncommon,
         Rare,
@@ -17,6 +20,8 @@
             {
                 case MagicItemRarity.VeryRare:
                     return "Very Rare";
+                case MagicItemRarity.Undefined:
+                    throw new IndexOutOfRangeException("Unexpected Error getting rarity string - Rarity Undefined: " + rarity.ToString());
                 default:
                     return rarity.ToString();
             }

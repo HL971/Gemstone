@@ -55,14 +55,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\DTO\Alignment.cs" />
     <Compile Include="Classes\DTO\Currency.cs" />
     <Compile Include="Classes\DTO\AdditionalWeaponPropertiesDTO.cs" />
+    <Compile Include="Classes\DTO\Potion.cs" />
     <Compile Include="Classes\Functional\Damage.cs" />
     <Compile Include="Classes\Functional\Die.cs" />
     <Compile Include="Classes\DTO\Weapon.cs" />
     <Compile Include="Classes\Functional\DamageDice.cs" />
     <Compile Include="Classes\Helper\RandomNumberGenerator.cs" />
     <Compile Include="Classes\Logic\WeaponGenerator.cs" />
+    <Compile Include="Definitions\Enums\AlignmentPartsEnums.cs" />
     <Compile Include="Definitions\Enums\DamageType.cs" />
     <Compile Include="Classes\Functional\WeaponProperty.cs" />
     <Compile Include="Definitions\Enums\MagicItemRarity.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Classes\Saving\DocumentSaver.cs" />
     <Compile Include="Definitions\Enums\MetalEnum.cs" />
     <Compile Include="Definitions\MagicWeapons.cs" />
+    <Compile Include="Definitions\Potions.cs" />
     <Compile Include="Definitions\StaticIntegers.cs" />
     <Compile Include="Views\CurrencyGeneratorView.xaml.cs">
       <DependentUpon>CurrencyGeneratorView.xaml</DependentUpon>
